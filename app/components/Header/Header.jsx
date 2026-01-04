@@ -32,7 +32,14 @@ export default function Header() {
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <span className={styles.logoText}>Ramiz Matlabov's Portfolio</span>
+          <span
+            className={styles.logoText}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            style={{ cursor: "pointer" }}
+            title="Go to top"
+          >
+            Ramiz Matlabov's Portfolio
+          </span>
         </div>
         <button
           className={`${styles.mobileMenuButton} ${isMobileMenuOpen ? styles.active : ""}`}
