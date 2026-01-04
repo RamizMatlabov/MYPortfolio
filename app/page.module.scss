@@ -270,7 +270,7 @@
   position: relative;
   padding: var(--spacing-xl);
   background: var(--bg-card);
-  border-radius: 16px;
+  border-radius: 6px 6px 16px 16px;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-md);
 
@@ -431,7 +431,7 @@
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
   padding: var(--spacing-xl) 0;
-  margin-top: var(--spacing-3xl);
+  margin-top: 0; // убран лишний отступ сверху
 }
 
 .footerContent {
