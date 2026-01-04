@@ -135,13 +135,28 @@
   font-weight: 500;
   cursor: pointer;
   padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: 6px;
   transition: all var(--transition-base);
   font-family: inherit;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background: var(--gradient-primary);
+    transition: width var(--transition-base);
+  }
 
   &:hover {
     color: var(--text-primary);
-    background: var(--bg-tertiary);
+    
+    &::before {
+      width: 100%;
+    }
   }
 
   @media (max-width: 768px) {
@@ -149,15 +164,14 @@
     text-align: center;
     padding: var(--spacing-sm);
     font-size: 1rem;
-    border-bottom: 1px solid var(--border-color);
 
-    &:last-child {
-      border-bottom: none;
+    &::before {
+      left: 0;
+      bottom: 0;
     }
 
     &:hover {
-      background: var(--bg-tertiary);
-      color: var(--accent-primary);
+      color: var(--text-primary);
     }
   }
 }
