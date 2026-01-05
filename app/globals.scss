@@ -117,12 +117,8 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-tertiary);
+  background: var(--gradient-primary);
   border-radius: 5px;
-  
-  &:hover {
-    background: var(--border-color);
-  }
 }
 
 // Selection
