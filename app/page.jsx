@@ -161,10 +161,10 @@ export default function Home() {
             <div className={`${styles.heroText} ${isVisible ? styles.fadeIn : ""}`}>
               <h1 className={styles.heroTitle}>
                 Fullstack Developer
-                <span className={styles.gradientText}> Building Modern Web Applications</span>
+                <span className={styles.gradientText}> Building Modern Web Applications and Web Sites</span>
               </h1>
               <p className={styles.heroDescription}>
-                I create scalable, performant, and user-friendly web applications using cutting-edge
+                I create scalable, performant, and user-friendly web applications and web sites using cutting-edge
                 technologies. Specialized in React, Next.js, Node.js, and Python development.
               </p>
               <div className={styles.heroButtons}>
@@ -197,7 +197,7 @@ export default function Home() {
                   <code>{`const developer = {
   name: "Fullstack Developer",
   skills: ["React", "Next.js", "Node.js"],
-  passion: "Building amazing apps",
+  passion: "Building amazing apps and web sites",
   available: true
 };`}</code>
                 </pre>
@@ -212,7 +212,7 @@ export default function Home() {
             <div className={styles.aboutText}>
               <p>
                 I'm a dedicated Fullstack Developer with a passion for creating modern, efficient,
-                and scalable web applications. With expertise spanning both frontend and backend
+                and scalable web applications and web sites. With expertise spanning both frontend and backend
                 technologies, I bring comprehensive solutions to complex development challenges.
               </p>
               <p>
