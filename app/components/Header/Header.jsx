@@ -38,7 +38,7 @@ export default function Header() {
             style={{ cursor: "pointer" }}
             title="Go to top"
           >
-            Ramiz Matlabov's Portfolio
+            Ramiz Matlabov&apos;s Portfolio
           </span>
         </div>
         <button

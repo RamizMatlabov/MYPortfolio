@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { 
   SiHtml5, 
   SiCss3, 
@@ -21,11 +21,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import styles from "./page.module.scss";
 
 export default function Home() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  const [isVisible] = useState(true);
 
   const skills = [
     { name: "HTML", icon: SiHtml5, color: "#e34c26" },
@@ -211,7 +207,7 @@ export default function Home() {
           <div className={styles.aboutContent}>
             <div className={styles.aboutText}>
               <p>
-                I'm a dedicated Fullstack Developer with a passion for creating modern, efficient,
+                I&apos;m a dedicated Fullstack Developer with a passion for creating modern, efficient,
                 and scalable web applications and web sites. With expertise spanning both frontend and backend
                 technologies, I bring comprehensive solutions to complex development challenges.
               </p>
@@ -221,8 +217,8 @@ export default function Home() {
                 exceptional user experiences across all devices.
               </p>
               <p>
-                Whether it's developing a new feature, optimizing existing code, or architecting a
-                complete application from scratch, I'm committed to delivering high-quality
+                Whether it&apos;s developing a new feature, optimizing existing code, or architecting a
+                complete application from scratch, I&apos;m committed to delivering high-quality
                 solutions that meet both technical and business objectives.
               </p>
             </div>
@@ -263,12 +259,49 @@ export default function Home() {
         </Section>
 
         {/* Contact Section */}
-        <Section id="contact" title="Get In Touch" subtitle="Let's work together on your next project" variant="contact">
+        <Section id="contact" title="Contact" subtitle="Let's work together on your next project" variant="contact">
           <div className={styles.contactContent}>
             <p className={styles.contactDescription}>
-              I'm always open to discussing new projects, creative ideas, or opportunities to be
+              I&apos;m always open to discussing new projects, creative ideas, or opportunities to be
               part of your vision. Feel free to reach out through any of the platforms below.
             </p>
+            <div className={styles.contactForm}>
+              <form onSubmit={(e) => e.preventDefault()}>
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="name" className={styles.formLabel}>Name</label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      className={styles.formInput}
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="email" className={styles.formLabel}>Email</label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      className={styles.formInput}
+                      placeholder="you@example.com"
+                    />
+                  </div>
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="message" className={styles.formLabel}>Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    className={styles.formTextarea}
+                    placeholder="Write your question"
+                  />
+                </div>
+                <button type="submit" className={styles.primaryButton}>Send</button>
+              </form>
+            </div>
             <div className={styles.contactLinks}>
               {contactLinks.map((link, index) => (
                 <a
