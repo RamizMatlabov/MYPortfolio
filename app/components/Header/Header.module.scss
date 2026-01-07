@@ -23,6 +23,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 480px) {
+    padding: var(--spacing-sm);
+  }
 }
 
 .logo {
@@ -41,6 +45,14 @@
 
   @media (max-width: 768px) {
     font-size: 1.25rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
   }
 }
 
