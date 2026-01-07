@@ -16,7 +16,7 @@
   justify-content: center;
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.4s, transform 0.4s;
+  transition: opacity 0.4s, transform 0.4s, background 0.1s ease;
 }
 
 .scrollToTopBtn.visible {
@@ -27,4 +27,21 @@
 .scrollToTopBtn:hover {
   box-shadow: var(--shadow-lg), var(--shadow-glow), var(--shadow-glow-pink);
   transform: translateY(-2px) scale(1.08);
+}
+
+.scrollToTopBtn:focus {
+  outline: none;
+}
+
+.scrollToTopBtn:focus-visible {
+  outline: 2px solid var(--accent-color, #6366f1);
+  outline-offset: 3px;
+  box-shadow: var(--shadow-lg), var(--shadow-glow), var(--shadow-glow-pink), 0 0 0 4px rgba(99, 102, 241, 0.2);
+  transform: translateY(-2px) scale(1.08);
+}
+
+.scrollToTopBtn:active {
+  background: linear-gradient(135deg, #566264 0%, #555563 50%, #524a63 100%);
+  transform: translateY(0) scale(0.95);
+  box-shadow: 0 1px 4px rgba(99,102,241,0.4);
 }
