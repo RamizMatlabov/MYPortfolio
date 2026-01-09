@@ -45,6 +45,8 @@ Portfolio/
 - **Next.js 16.1.1** - React framework
 - **React 19.2.3** - UI library
 - **SCSS** - Styling with modules
+- **Firebase** - Backend for contact form submissions
+- **Firestore** - Database for storing contact messages
 - **Inter & JetBrains Mono** - Modern fonts
 
 ## 📦 Installation
@@ -59,12 +61,39 @@ Portfolio/
    npm install
    ```
 
-3. **Run the development server:**
+3. **Set up Firebase (for Contact Form):**
+   
+   a. Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+   
+   b. Enable Firestore Database:
+      - Go to Firestore Database in Firebase Console
+      - Click "Create database"
+      - Start in test mode (for development)
+      - Choose your preferred location
+   
+   c. Get your Firebase configuration:
+      - Go to Project Settings > Your apps
+      - Click on the Web app icon (`</>`) to add a web app
+      - Copy your Firebase configuration
+   
+   d. Create a `.env.local` file in the root directory:
+      ```env
+      NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+      NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+      NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+      ```
+   
+   e. Replace the values with your actual Firebase configuration
+
+4. **Run the development server:**
    ```bash
    npm run dev
    ```
 
-4. **Open your browser:**
+5. **Open your browser:**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## 🎨 Customization
@@ -118,7 +147,12 @@ Edit `app/layout.jsx` to customize:
   - GitHub and Live Demo links
 
 ### 5. Contact
-- Social media links:
+- **Contact Form**: 
+  - Name, Email, and Message fields
+  - Form submissions saved to Firebase Firestore
+  - Success/error notifications
+  - Form validation
+- **Social media links**:
   - Email
   - GitHub
   - Telegram
@@ -162,6 +196,22 @@ npm start
 - `npm run build` - Build for production
 - `npm start` - Start production server
 - `npm run lint` - Run ESLint
+
+## 🔥 Firebase Contact Form
+
+The contact form uses Firebase Firestore to store form submissions. To view submitted messages:
+
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Select your project
+3. Navigate to Firestore Database
+4. You'll see a collection named `contacts` with all form submissions
+5. Each document contains:
+   - `name` - Sender's name
+   - `email` - Sender's email
+   - `message` - Message content
+   - `timestamp` - Submission time
+
+**Security Note**: Make sure to set up proper Firestore security rules before deploying to production!
 
 ## 🌐 Deployment
 

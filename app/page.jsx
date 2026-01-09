@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   SiHtml5, 
   SiCss3, 
@@ -13,6 +13,9 @@ import {
   SiGithub
 } from "react-icons/si";
 import { FaCode, FaPlug } from "react-icons/fa";
+import { collection, addDoc, serverTimestamp, enableNetwork, disableNetwork } from "firebase/firestore";
+import { db } from "../lib/firebase";
+import emailjs from "@emailjs/browser";
 import Header from "./components/Header/Header";
 import Section from "./components/Section/Section";
 import SkillCard from "./components/SkillCard/SkillCard";
@@ -22,6 +25,36 @@ import styles from "./page.module.scss";
 
 export default function Home() {
   const [isVisible] = useState(true);
+  
+  // Состояние формы Contact
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({
+    type: null, // 'success' или 'error'
+    message: "",
+  });
+
+  // Проверка инициализации Firebase и EmailJS при загрузке
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      console.log('Firebase DB initialized:', !!db);
+      if (!db) {
+        console.error('Firebase не инициализирован. Проверьте переменные окружения в .env.local');
+      }
+      
+      // Инициализация EmailJS
+      if (process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY) {
+        emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
+        console.log('EmailJS initialized');
+      } else {
+        console.warn('EmailJS не настроен. Добавьте переменные окружения для отправки email.');
+      }
+    }
+  }, []);
 
   const skills = [
     { name: "HTML", icon: SiHtml5, color: "#e34c26" },
@@ -86,6 +119,163 @@ export default function Home() {
       demoUrl: "https://demo.example.com",
     },
   ];
+
+  // Обработчик отправки формы
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    console.log("Form submit started");
+    
+    // Валидация
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setSubmitStatus({
+        type: "error",
+        message: "Пожалуйста, заполните все поля",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
+
+    try {
+      console.log("Checking Firebase DB...", { db: !!db });
+      
+      // Проверка наличия db
+      if (!db) {
+        console.error("DB is not initialized!");
+        throw new Error("Firebase не инициализирован. Проверьте переменные окружения.");
+      }
+
+      // Убеждаемся, что сеть включена
+      try {
+        await enableNetwork(db);
+        console.log("Firestore network enabled");
+      } catch (networkError) {
+        console.warn("Network enable warning:", networkError);
+      }
+
+      console.log("Preparing to save to Firestore...");
+      console.log("Data to save:", {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        messageLength: formData.message.trim().length
+      });
+      
+      // Создаем таймаут для отслеживания зависания
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => {
+          reject(new Error("Превышено время ожидания. Проверьте подключение к интернету и настройки Firestore. Убедитесь, что правила безопасности Firestore разрешают запись в коллекцию 'contacts'."));
+        }, 15000); // Увеличил до 15 секунд
+      });
+
+      // Сохранение в Firestore с таймаутом
+      const savePromise = addDoc(collection(db, "contacts"), {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        message: formData.message.trim(),
+        timestamp: serverTimestamp(),
+      });
+
+      console.log("Waiting for Firestore response...");
+      console.log("Collection path: contacts");
+      
+      const result = await Promise.race([savePromise, timeoutPromise]);
+      
+      console.log("Successfully saved to Firestore!", result);
+
+      // Отправка email через EmailJS (если настроен)
+      const emailjsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+      const emailjsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const emailjsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      
+      if (emailjsPublicKey && emailjsServiceId && emailjsTemplateId) {
+        try {
+          const emailParams = {
+            from_name: formData.name.trim(),
+            from_email: formData.email.trim(),
+            message: formData.message.trim(),
+            to_email: process.env.NEXT_PUBLIC_EMAILJS_TO_EMAIL || "ramizmatlabov923@gmail.com",
+          };
+
+          await emailjs.send(
+            emailjsServiceId,
+            emailjsTemplateId,
+            emailParams,
+            emailjsPublicKey
+          );
+
+          console.log("Email sent successfully!");
+        } catch (emailError) {
+          console.warn("Email sending failed, but data saved to Firestore:", emailError);
+          // Не показываем ошибку пользователю, так как данные уже сохранены в Firestore
+        }
+      } else {
+        console.warn("EmailJS не настроен. Сообщение сохранено в Firestore, но email не отправлен.");
+        console.warn("Для отправки email настройте EmailJS (см. EMAILJS_SETUP.md)");
+      }
+
+      // Успешная отправка
+      setSubmitStatus({
+        type: "success",
+        message: "Спасибо! Ваше сообщение отправлено. Я свяжусь с вами в ближайшее время.",
+      });
+      
+      // Очистка формы
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+
+      // Автоматически скрыть сообщение через 5 секунд
+      setTimeout(() => {
+        setSubmitStatus({ type: null, message: "" });
+      }, 5000);
+    } catch (error) {
+      console.error("Ошибка при отправке формы:", error);
+      console.error("Детали ошибки:", {
+        code: error.code,
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      });
+      
+      let errorMessage = "Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.";
+      
+      // Более детальные сообщения об ошибках
+      if (error.code === "permission-denied") {
+        errorMessage = "Ошибка доступа. Проверьте правила безопасности Firestore в Firebase Console. Правила должны разрешать запись в коллекцию 'contacts'.";
+      } else if (error.code === "unavailable") {
+        errorMessage = "Сервис временно недоступен. Проверьте подключение к интернету.";
+      } else if (error.message?.includes("Firebase не инициализирован")) {
+        errorMessage = "Ошибка конфигурации Firebase. Проверьте файл .env.local и перезапустите сервер.";
+      } else if (error.message?.includes("Превышено время ожидания")) {
+        errorMessage = error.message + " Возможно, проблема с правилами безопасности Firestore. Убедитесь, что в Firebase Console → Firestore Database → Rules разрешена запись в коллекцию 'contacts'.";
+      }
+      
+      setSubmitStatus({
+        type: "error",
+        message: errorMessage,
+      });
+    } finally {
+      setIsSubmitting(false);
+      console.log("Form submit finished");
+    }
+  };
+
+  // Обработчик изменения полей формы
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Очистить сообщение об ошибке при изменении поля
+    if (submitStatus.type === "error") {
+      setSubmitStatus({ type: null, message: "" });
+    }
+  };
 
   const contactLinks = [
     {
@@ -195,7 +385,7 @@ export default function Home() {
   skills: ["React", "Next.js", "Node.js"],
   passion: "Building amazing apps and web sites",
   available: true
-};`}</code>
+};`}</code> 
                 </pre>
               </div>
             </div>
@@ -266,7 +456,18 @@ export default function Home() {
               part of your vision. Feel free to reach out through any of the platforms below.
             </p>
             <div className={styles.contactForm}>
-              <form onSubmit={(e) => e.preventDefault()}>
+              <form onSubmit={handleSubmit}>
+                {/* Сообщения об успехе/ошибке */}
+                {submitStatus.type && (
+                  <div
+                    className={`${styles.formMessage} ${
+                      submitStatus.type === "success" ? styles.formMessageSuccess : styles.formMessageError
+                    }`}
+                  >
+                    {submitStatus.message}
+                  </div>
+                )}
+                
                 <div className={styles.formRow}>
                   <div className={styles.formGroup}>
                     <label htmlFor="name" className={styles.formLabel}>Name</label>
@@ -276,6 +477,10 @@ export default function Home() {
                       type="text"
                       className={styles.formInput}
                       placeholder="Your name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      required
                     />
                   </div>
                   <div className={styles.formGroup}>
@@ -286,6 +491,10 @@ export default function Home() {
                       type="email"
                       className={styles.formInput}
                       placeholder="you@example.com"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      required
                     />
                   </div>
                 </div>
@@ -297,9 +506,19 @@ export default function Home() {
                     rows="5"
                     className={styles.formTextarea}
                     placeholder="Write your question"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    disabled={isSubmitting}
+                    required
                   />
                 </div>
-                <button type="submit" className={styles.primaryButton}>Send</button>
+                <button 
+                  type="submit" 
+                  className={styles.primaryButton}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : "Send"}
+                </button>
               </form>
             </div>
             <div className={styles.contactLinks}>
