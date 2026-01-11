@@ -1,0 +1,30 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Правила для коллекции contacts - разрешаем создание новых документов
+    match /contacts/{contactId} {
+      // Разрешаем создание (write) документов для всех пользователей
+      // Валидация данных: проверяем наличие обязательных полей
+      allow create: if request.resource.data.keys().hasAll(['name', 'email', 'message', 'timestamp'])
+                   && request.resource.data.name is string
+                   && request.resource.data.email is string
+                   && request.resource.data.message is string
+                   && request.resource.data.name.size() > 0
+                   && request.resource.data.email.size() > 0
+                   && request.resource.data.message.size() > 0
+                   && request.resource.data.name.size() <= 200
+                   && request.resource.data.email.size() <= 200
+                   && request.resource.data.message.size() <= 5000;
+      
+      // Запрещаем чтение и обновление для всех (только создание)
+      allow read, update, delete: if false;
+    }
+    
+    // Для всех остальных коллекций - запрет по умолчанию
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

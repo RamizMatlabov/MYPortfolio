@@ -87,6 +87,13 @@ Portfolio/
       ```
    
    e. Replace the values with your actual Firebase configuration
+   
+   f. **Настройка правил безопасности Firestore (обязательно для продакшена):**
+      - Откройте [Firebase Console](https://console.firebase.google.com/)
+      - Перейдите в **Firestore Database → Rules**
+      - Скопируйте содержимое файла `firestore.rules` из корня проекта
+      - Вставьте правила в редактор и нажмите **"Publish"**
+      - ⚠️ Без этого контактная форма не будет работать в продакшене!
 
 4. **Run the development server:**
    ```bash
@@ -213,13 +220,32 @@ The contact form uses Firebase Firestore to store form submissions. To view subm
 
 **Security Note**: Make sure to set up proper Firestore security rules before deploying to production!
 
+### ⚠️ Важно: Настройка правил безопасности Firestore
+
+**Для работы контактной формы на Vercel необходимо:**
+
+1. **Настроить правила безопасности Firestore:**
+   - Откройте [Firebase Console](https://console.firebase.google.com/)
+   - Перейдите в **Firestore Database → Rules**
+   - Скопируйте правила из файла `firestore.rules` в корне проекта
+   - Вставьте и опубликуйте правила (кнопка **"Publish"**)
+
+2. **Добавить переменные окружения в Vercel:**
+   - Перейдите в настройки проекта Vercel: **Settings → Environment Variables**
+   - Добавьте все переменные Firebase с префиксом `NEXT_PUBLIC_`
+   - Выполните новый деплой после добавления переменных
+
+📖 **Подробная инструкция:** См. [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)
+
 ## 🌐 Deployment
 
 ### Deploy to Vercel (Recommended)
 
 1. Push your code to GitHub
 2. Import your repository on [Vercel](https://vercel.com)
-3. Deploy with one click
+3. **ВАЖНО:** Добавьте переменные окружения Firebase в настройках проекта (см. [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md))
+4. Настройте правила безопасности Firestore (см. файл `firestore.rules` и [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md))
+5. Deploy with one click
 
 ### Other Platforms
 
