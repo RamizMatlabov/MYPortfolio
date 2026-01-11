@@ -56,13 +56,16 @@ export default function Home() {
     }
   }, []);
 
-  const skills = [
+  const frontendSkills = [
     { name: "HTML", icon: SiHtml5, color: "#e34c26" },
     { name: "CSS / SCSS", icon: SiCss3, color: "#264de4" },
     { name: "JavaScript", icon: SiJavascript, color: "#f7df1e" },
-    { name: "Python", icon: SiPython, color: "#3776ab" },
     { name: "React", icon: SiReact, color: "#61dafb" },
     { name: "Next.js", icon: SiNextdotjs, color: "#000000" },
+  ];
+
+  const backendSkills = [
+    { name: "Python", icon: SiPython, color: "#3776ab" },
     { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
     { name: "API Development", icon: FaPlug, color: "#6366f1" },
     { name: "Git", icon: SiGit, color: "#f05032" },
@@ -417,19 +420,40 @@ export default function Home() {
 
         {/* Skills Section */}
         <Section id="skills" title="Skills" subtitle="Technologies I work with" variant="skills">
-          <div className={styles.skillsGrid}>
-            {skills.map((skill, index) => {
-              const IconComponent = skill.icon;
-              return (
-                <div
-                  key={index}
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                  className={styles.skillWrapper}
-                >
-                  <SkillCard name={skill.name} icon={<IconComponent />} color={skill.color} />
-                </div>
-              );
-            })}
+          <div className={styles.skillsCategory}>
+            <h3 className={styles.categoryTitle}>Frontend</h3>
+            <div className={styles.skillsGrid}>
+              {frontendSkills.map((skill, index) => {
+                const IconComponent = skill.icon;
+                return (
+                  <div
+                    key={index}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                    className={styles.skillWrapper}
+                  >
+                    <SkillCard name={skill.name} icon={<IconComponent />} color={skill.color} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className={styles.skillsCategory}>
+            <h3 className={styles.categoryTitle}>Backend</h3>
+            <div className={styles.skillsGrid}>
+              {backendSkills.map((skill, index) => {
+                const IconComponent = skill.icon;
+                return (
+                  <div
+                    key={index}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                    className={styles.skillWrapper}
+                  >
+                    <SkillCard name={skill.name} icon={<IconComponent />} color={skill.color} />
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </Section>
 

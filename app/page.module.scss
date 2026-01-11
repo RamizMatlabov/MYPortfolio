@@ -363,6 +363,28 @@
 // Skills Section
 // ============================================
 
+.skillsCategory {
+  margin-bottom: var(--spacing-2xl);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.categoryTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+  padding-left: var(--spacing-sm);
+  border-left: 4px solid var(--accent-primary);
+  
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+  }
+}
+
 .skillsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
