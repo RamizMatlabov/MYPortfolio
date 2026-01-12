@@ -67,7 +67,7 @@ export default function Home() {
   const backendSkills = [
     { name: "Python", icon: SiPython, color: "#3776ab" },
     { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
-    { name: "API Development", icon: FaPlug, color: "#6366f1" },
+    { name: "API", icon: FaPlug, color: "#6366f1" },
     { name: "Git", icon: SiGit, color: "#f05032" },
     { name: "GitHub", icon: SiGithub, color: "#181717" },
   ];
@@ -420,39 +420,61 @@ export default function Home() {
 
         {/* Skills Section */}
         <Section id="skills" title="Skills" subtitle="Technologies I work with" variant="skills">
-          <div className={styles.skillsCategory}>
-            <h3 className={styles.categoryTitle}>Frontend</h3>
-            <div className={styles.skillsGrid}>
-              {frontendSkills.map((skill, index) => {
-                const IconComponent = skill.icon;
-                return (
-                  <div
-                    key={index}
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                    className={styles.skillWrapper}
-                  >
-                    <SkillCard name={skill.name} icon={<IconComponent />} color={skill.color} />
-                  </div>
-                );
-              })}
+          <div className={styles.skillsOrbitContainer}>
+            {/* Frontend Orbital System */}
+            <div className={styles.orbitSystem}>
+              <div className={styles.orbitCenter}>
+                <div className={styles.centerGlow}></div>
+                <h3 className={styles.orbitTitle}>Frontend</h3>
+              </div>
+              <div className={styles.orbitPath}>
+                {frontendSkills.map((skill, index) => {
+                  const IconComponent = skill.icon;
+                  const angle = (360 / frontendSkills.length) * index;
+                  return (
+                    <div
+                      key={index}
+                      className={styles.orbitItem}
+                      style={{
+                        '--angle': `${angle}deg`,
+                        '--delay': `${index * 0.1}s`,
+                        '--radius': '180px',
+                        '--duration': '20s',
+                      }}
+                    >
+                      <SkillCard name={skill.name} icon={<IconComponent />} color={skill.color} />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-          <div className={styles.skillsCategory}>
-            <h3 className={styles.categoryTitle}>Backend</h3>
-            <div className={styles.skillsGrid}>
-              {backendSkills.map((skill, index) => {
-                const IconComponent = skill.icon;
-                return (
-                  <div
-                    key={index}
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                    className={styles.skillWrapper}
-                  >
-                    <SkillCard name={skill.name} icon={<IconComponent />} color={skill.color} />
-                  </div>
-                );
-              })}
+            {/* Backend Orbital System */}
+            <div className={styles.orbitSystem}>
+              <div className={styles.orbitCenter}>
+                <div className={styles.centerGlow}></div>
+                <h3 className={styles.orbitTitle}>Backend</h3>
+              </div>
+              <div className={styles.orbitPath}>
+                {backendSkills.map((skill, index) => {
+                  const IconComponent = skill.icon;
+                  const angle = (360 / backendSkills.length) * index;
+                  return (
+                    <div
+                      key={index}
+                      className={styles.orbitItem}
+                      style={{
+                        '--angle': `${angle}deg`,
+                        '--delay': `${index * 0.1}s`,
+                        '--radius': '180px',
+                        '--duration': '20s',
+                      }}
+                    >
+                      <SkillCard name={skill.name} icon={<IconComponent />} color={skill.color} />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </Section>
@@ -475,10 +497,6 @@ export default function Home() {
         {/* Contact Section */}
         <Section id="contact" title="Contact" subtitle="Let's work together on your next project" variant="contact">
           <div className={styles.contactContent}>
-            <p className={styles.contactDescription}>
-              I&apos;m always open to discussing new projects, creative ideas, or opportunities to be
-              part of your vision. Feel free to reach out through any of the platforms below.
-            </p>
             <div className={styles.contactForm}>
               <form onSubmit={handleSubmit}>
                 {/* Сообщения об успехе/ошибке */}
@@ -545,6 +563,10 @@ export default function Home() {
                 </button>
               </form>
             </div>
+            <p className={styles.contactDescription}>
+              I&apos;m always open to discussing new projects, creative ideas, or opportunities to be
+              part of your vision. Feel free to reach out through any of the platforms below.
+            </p>
             <div className={styles.contactLinks}>
               {contactLinks.map((link, index) => (
                 <a
