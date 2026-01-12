@@ -94,7 +94,7 @@ export default function Home() {
         "Веб‑платформа для заказа и доставки бутилированной воды IceWater: выбор объёма и типа воды, оформление заявок, управление заказами и контактами с курьерской службой. Проект разработан с упором на удобный интерфейс и быструю работу на любых устройствах.",
       techStack: ["React", "Next.js", "Node.js", "MongoDB", "REST API"],
       githubUrl: "https://github.com/RamizMatlabov/My-Project.git",
-      demoUrl: "https://my-project-56ug.onrender.com",
+      demoUrl: "https://ice-water-delivery.vercel.app/",
     },
     {
       title: "IceWaterBot — Telegram-бот для заказа воды",
