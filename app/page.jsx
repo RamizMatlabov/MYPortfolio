@@ -74,52 +74,41 @@ export default function Home() {
 
   const projects = [
     {
-      title: "E-Commerce Platform",
+      title: "PCMarket — интернет-магазин компьютерных товаров",
       description:
-        "A full-featured e-commerce platform with user authentication, product management, shopping cart, and payment integration. Built with modern web technologies for optimal performance and user experience.",
-      techStack: ["React", "Next.js", "Node.js", "MongoDB", "Stripe"],
-      githubUrl: "https://github.com",
-      demoUrl: "https://demo.example.com",
+        "Современный интернет-магазин компьютерной техники с каталогом товаров, детальными карточками, корзиной и оформлением заказов. Проект построен на Next.js и Django с акцентом на быстродействие, адаптивный интерфейс и удобство пользователя.",
+      techStack: [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Django",
+        "Django REST Framework",
+        "SQLite",
+      ],
+      githubUrl: "https://github.com/RamizMatlabov/PCMarket_project.git",
+      demoUrl: "https://pcmarket-project.vercel.app/",
     },
     {
-      title: "Task Management App",
+      title: "IceWater — доставка питьевой воды",
       description:
-        "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features. Designed for productivity and seamless user experience.",
-      techStack: ["React", "TypeScript", "Node.js", "Socket.io", "PostgreSQL"],
-      githubUrl: "https://github.com",
-      demoUrl: "https://demo.example.com",
+        "Веб‑платформа для заказа и доставки бутилированной воды IceWater: выбор объёма и типа воды, оформление заявок, управление заказами и контактами с курьерской службой. Проект разработан с упором на удобный интерфейс и быструю работу на любых устройствах.",
+      techStack: ["React", "Next.js", "Node.js", "MongoDB", "REST API"],
+      githubUrl: "https://github.com/RamizMatlabov/My-Project.git",
+      demoUrl: "https://my-project-56ug.onrender.com",
     },
     {
-      title: "Social Media Dashboard",
+      title: "IceWaterBot — Telegram-бот для заказа воды",
       description:
-        "An analytics dashboard for social media management with data visualization, scheduling tools, and comprehensive reporting. Helps businesses manage their social presence effectively.",
-      techStack: ["Next.js", "Python", "Django", "Chart.js", "REST API"],
-      githubUrl: "https://github.com",
-      demoUrl: "https://demo.example.com",
+        "Telegram-бот для сервиса IceWater, который позволяет оформить заказ питьевой воды прямо в чате: выбрать объём, указать адрес доставки и контакты, а также быстро повторять заказы. Упрощает процесс оформления заявок без необходимости заходить на сайт.",
+      techStack: ["Python", "Telegram Bot API", "Aiogram", "SQLite"],
+      githubUrl: "https://github.com/RamizMatlabov/telegram-bot.git",
+      demoUrl: "https://t.me/MyPureWaterBot",
     },
     {
-      title: "Weather Forecast App",
+      title: "Новые проекты в процессе",
       description:
-        "A responsive weather application with location-based forecasts, interactive maps, and detailed weather analytics. Features beautiful UI and accurate weather data integration.",
-      techStack: ["React", "JavaScript", "API Integration", "SCSS"],
-      githubUrl: "https://github.com",
-      demoUrl: "https://demo.example.com",
-    },
-    {
-      title: "Blog Platform",
-      description:
-        "A modern blogging platform with markdown support, syntax highlighting, and SEO optimization. Includes admin panel for content management and user engagement features.",
-      techStack: ["Next.js", "Node.js", "MongoDB", "Markdown", "SEO"],
-      githubUrl: "https://github.com",
-      demoUrl: "https://demo.example.com",
-    },
-    {
-      title: "Real-Time Chat Application",
-      description:
-        "A real-time messaging application with end-to-end encryption, file sharing, and group chat capabilities. Built for secure and efficient communication.",
-      techStack: ["React", "Node.js", "Socket.io", "WebRTC", "MongoDB"],
-      githubUrl: "https://github.com",
-      demoUrl: "https://demo.example.com",
+        "Параллельно с этими работаю над ещё несколькими проектами — интернет‑магазинами, лендингами и внутренними сервисами. Как только завершу, они появятся здесь с подробным описанием и демо-версиями.",
+      comingSoon: true,
     },
   ];
 

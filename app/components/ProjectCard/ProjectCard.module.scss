@@ -17,6 +17,19 @@
   }
 }
 
+.cardComingSoon {
+  border-style: dashed;
+  border-color: var(--accent-primary);
+  background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.12), transparent),
+    var(--bg-primary);
+  text-align: center;
+
+  &:hover {
+    background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.18), transparent),
+      var(--bg-tertiary);
+  }
+}
+
 .content {
   flex: 1;
   display: flex;
@@ -94,5 +107,21 @@
       transform: translateX(2px);
     }
   }
+}
+
+.comingSoonBadge {
+  margin-top: var(--spacing-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px dashed rgba(99, 102, 241, 0.5);
 }
 
