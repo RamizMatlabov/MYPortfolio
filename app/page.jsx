@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { 
   SiHtml5, 
   SiCss3, 
@@ -25,6 +25,26 @@ import styles from "./page.module.scss";
 
 export default function Home() {
   const [isVisible] = useState(true);
+  const aboutRef = useRef(null);
+  const handleAboutMove = (e) => {
+    if (!aboutRef.current) return;
+    const rect = aboutRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    const tiltX = ((x - 50) / 50) * 6;
+    const tiltY = ((50 - y) / 50) * 6;
+    aboutRef.current.style.setProperty('--mx', `${x}%`);
+    aboutRef.current.style.setProperty('--my', `${y}%`);
+    aboutRef.current.style.setProperty('--tx', `${tiltX}deg`);
+    aboutRef.current.style.setProperty('--ty', `${tiltY}deg`);
+  };
+  const handleAboutLeave = () => {
+    if (!aboutRef.current) return;
+    aboutRef.current.style.setProperty('--mx', `50%`);
+    aboutRef.current.style.setProperty('--my', `50%`);
+    aboutRef.current.style.setProperty('--tx', `0deg`);
+    aboutRef.current.style.setProperty('--ty', `0deg`);
+  };
   
   // Состояние формы Contact
   const [formData, setFormData] = useState({
@@ -387,7 +407,12 @@ export default function Home() {
         {/* About Section */}
         <Section id="about" title="About Me" subtitle="Passionate developer crafting digital experiences" variant="about">
           <div className={styles.aboutContent}>
-            <div className={styles.aboutText}>
+            <div
+              ref={aboutRef}
+              onMouseMove={handleAboutMove}
+              onMouseLeave={handleAboutLeave}
+              className={styles.aboutText}
+            >
               <p>
                 I&apos;m a dedicated Fullstack Developer with a passion for creating modern, efficient,
                 and scalable web applications and web sites. With expertise spanning both frontend and backend

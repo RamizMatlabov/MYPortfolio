@@ -89,23 +89,78 @@
   }
 }
 
+@keyframes auroraDrift {
+  0% {
+    transform: translate(-10%, -10%) rotate(0deg) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(10%, 8%) rotate(180deg) scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-10%, -10%) rotate(360deg) scale(1);
+    opacity: 0.7;
+  }
+}
+
+@keyframes auroraGlide {
+  0% {
+    transform: translate(8%, -12%) rotate(0deg) scale(1.05);
+  }
+  50% {
+    transform: translate(-6%, 12%) rotate(-180deg) scale(1);
+  }
+  100% {
+    transform: translate(8%, -12%) rotate(-360deg) scale(1.05);
+  }
+}
+
 // About section - Indigo/Blue background with gradient animation
 .about {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(59, 130, 246, 0.08) 50%, rgba(6, 182, 212, 0.05) 100%);
-  background-size: 200% 200%;
-  animation: gradientShift 8s ease infinite;
+  background: radial-gradient(1200px circle at 10% 10%, rgba(99, 102, 241, 0.04), transparent 40%),
+              radial-gradient(900px circle at 90% 80%, rgba(6, 182, 212, 0.05), transparent 45%),
+              var(--bg-primary);
   position: relative;
   overflow: hidden;
 
   &::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-    animation: float 12s ease-in-out infinite;
+    top: -30%;
+    left: -30%;
+    width: 160%;
+    height: 160%;
+    background:
+      conic-gradient(from 180deg at 50% 50%,
+        rgba(99, 102, 241, 0.18),
+        rgba(6, 182, 212, 0.16),
+        rgba(236, 72, 153, 0.18),
+        rgba(139, 92, 246, 0.16),
+        rgba(99, 102, 241, 0.18));
+    filter: blur(60px);
+    mix-blend-mode: screen;
+    animation: auroraDrift 24s linear infinite;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -35%;
+    right: -35%;
+    width: 170%;
+    height: 170%;
+    background:
+      conic-gradient(from 0deg at 50% 50%,
+        rgba(6, 182, 212, 0.14),
+        rgba(99, 102, 241, 0.16),
+        rgba(236, 72, 153, 0.14),
+        rgba(139, 92, 246, 0.16),
+        rgba(6, 182, 212, 0.14));
+    filter: blur(70px);
+    mix-blend-mode: lighten;
+    animation: auroraGlide 28s ease-in-out infinite;
     pointer-events: none;
   }
 }

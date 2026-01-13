@@ -328,6 +328,13 @@
   border-radius: 6px 6px 16px 16px;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-md);
+  --mx: 50%;
+  --my: 50%;
+  --tx: 0deg;
+  --ty: 0deg;
+  transform: perspective(800px) rotateX(var(--ty)) rotateY(var(--tx));
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  will-change: transform;
 
   @media (max-width: 768px) {
     padding: var(--spacing-lg);
@@ -351,11 +358,21 @@
     background: var(--gradient-primary);
     border-radius: 16px 16px 0 0;
   }
+  
+  &:hover {
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.15), 0 6px 18px rgba(236, 72, 153, 0.12);
+  }
 
   p {
     color: var(--text-secondary);
     position: relative;
     z-index: 1;
+  }
+}
+
+@keyframes spinHolo {
+  to {
+    transform: rotate(360deg);
   }
 }
 
