@@ -1,4 +1,5 @@
 import styles from "./ProjectCard.module.scss";
+import Meteors from "../Meteors/Meteors";
 
 export default function ProjectCard({
   title,
@@ -12,6 +13,7 @@ export default function ProjectCard({
 
   return (
     <div className={cardClassName}>
+      <Meteors number={15} />
       <div className={styles.content}>
         <h3 className={styles.title}>{title}</h3>
         <p className={styles.description}>{description}</p>

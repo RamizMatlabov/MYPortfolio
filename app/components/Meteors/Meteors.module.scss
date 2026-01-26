@@ -1,0 +1,46 @@
+.meteorsContainer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.meteor {
+  position: absolute;
+  top: -100px; /* Start above the container */
+  width: 1.5px;
+  height: 100px; /* Length of the trail */
+  background: linear-gradient(to bottom, rgba(99, 102, 241, 0), rgba(99, 102, 241, 0.8));
+  opacity: 0;
+  animation: meteor linear infinite;
+  border-radius: 999px;
+
+  /* Glowing head of the meteor/rain */
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(139, 92, 246, 1);
+    box-shadow: 0 0 10px 2px rgba(99, 102, 241, 0.5);
+  }
+}
+
+@keyframes meteor {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(1000px); /* Move down significantly */
+    opacity: 0;
+  }
+}
