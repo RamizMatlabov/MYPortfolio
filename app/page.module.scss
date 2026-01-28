@@ -249,7 +249,9 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--gradient-primary);
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899, #6366f1);
+    background-size: 300% 100%;
+    animation: infinityFlow 3s linear infinite;
   }
 }
 
@@ -355,7 +357,9 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--gradient-primary);
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899, #6366f1);
+    background-size: 300% 100%;
+    animation: infinityFlow 3s linear infinite;
     border-radius: 16px 16px 0 0;
   }
   
@@ -805,7 +809,9 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: var(--gradient-primary);
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899, #6366f1);
+    background-size: 300% 100%;
+    animation: infinityFlow 3s linear infinite;
     border-radius: 24px 24px 0 0;
   }
 
@@ -1279,5 +1285,14 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes infinityFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
   }
 }
